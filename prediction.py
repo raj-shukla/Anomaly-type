@@ -10,15 +10,28 @@ from keras.models import load_model
 from keras.layers import Dense, Flatten
 from keras.layers import LSTM, Dropout
 import csv
-import pandas as pd
 
-np.set_printoptions(threshold=np.nan)
 
 np.random.seed(7)
 
 
-X = process_data.X
-Y = process_data.Y
+#X = process_data.X
+#Y = process_data.Y
+X = []
+Y = []
+with open("input_data.csv", "r") as input_file:
+    reader = csv.reader(input_file)
+    for row in reader:
+        x = [float(i) for i in row]
+        X.append(x)
+        
+with open("output_data.csv", "r") as output_file:
+    reader = csv.reader(output_file)
+    for row in reader:
+        Y = [float(i) for i in row]
+
+print(X[0:10])
+
 
 X, Y = np.array(X), np.array(Y)
 
@@ -34,24 +47,23 @@ Y_test = Y[2000:]
 
 
 
-model = load_model('model_10000.h5')
+model = load_model('model_deep_1000.h5')
 #model.summary()
 model.get_weights()
 
-prediction_train = model.predict(X_train).flatten()
-error_train = np.mean(np.abs(prediction_train - Y_train))
+prediction_test = model.predict(X_test)
+print (prediction_test.flatten())
 
-prediction_test = model.predict(X_test).flatten()
-error_test = np.mean((np.abs(prediction_test - Y_test))
-
-print(prediction_train)
-print(prediction_test)
-print(error_train)
-print(error_test)
-
-print(prediction_test[10:20])
-print(Y_test[10:20])
-
+error = 0
+for i in range(0, len(Y_test)):
+    print("###############")
+    #print(Y_test[i])
+    #print(prediction_test[i])
+    diff = abs(prediction_test[i] - Y_test[i])
+    print(diff)
+    error = error + diff
+    
+print(error/len(Y_test))
 
 
 
