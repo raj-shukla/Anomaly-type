@@ -48,30 +48,22 @@ Y_test = Y[2000:]
 print(X.shape)
 print(Y.shape)       
 
-
+layers = 4
+epochs = 1000
 
 model = Sequential ()
-model.add(LSTM(units=128, return_sequences=True, input_shape=(X_train.shape[1], 1))) 
-model.add(Dropout(0.2))  
-model.add(LSTM(units=50, return_sequences=True))  
-model.add(Dropout(0.2))
-model.add(LSTM(units=50, return_sequences=True))  
-model.add(Dropout(0.2))
-model.add(LSTM(units=50, return_sequences=True))  
-model.add(Dropout(0.2))
-model.add(LSTM(units=50, return_sequences=True))  
-model.add(Dropout(0.2))
-model.add(LSTM(units=50, return_sequences=True))  
-model.add(Dropout(0.2))
-model.add(LSTM(units=50, return_sequences=True))  
-model.add(Dropout(0.2))
-model.add(LSTM(units=50))  
+model.add(LSTM(units=128, return_sequences=True, activation='softmax', input_shape=(X_train.shape[1], 1))) 
+model.add(Dropout(0.2)) 
+for i in range(0, layers-2): 
+    model.add(LSTM(units=50, activation='softmax', return_sequences=True))  
+    model.add(Dropout(0.2))
+
+model.add(LSTM(units=50, activation='softmax'))  
 model.add(Dropout(0.2))  
 model.add(Dense(units = 1))  
 #model.add(Flatten())
 
-layers = 8
-epochs = 2
+
 
 model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['mae', 'acc'])
 

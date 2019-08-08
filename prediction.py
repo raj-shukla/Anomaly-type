@@ -47,7 +47,7 @@ Y_test = Y[2000:]
 
 
 
-model = load_model('model_deep_1000.h5')
+model = load_model('model_architecture_5000.h5')
 #model.summary()
 model.get_weights()
 
