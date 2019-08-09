@@ -2,7 +2,6 @@ import numpy as np
 import random
 from scipy import stats
 from scipy.stats import kurtosis, skew
-import process_data
 import math
 from keras.models import Sequential
 from keras.models import model_from_json
@@ -47,7 +46,7 @@ Y_test = Y[2000:]
 
 
 
-model = load_model('model_architecture_5000.h5')
+model = load_model('CNN_layers_activation_tanh_4_epochs_5000.h5')
 #model.summary()
 model.get_weights()
 
@@ -57,8 +56,8 @@ print (prediction_test.flatten())
 error = 0
 for i in range(0, len(Y_test)):
     print("###############")
-    #print(Y_test[i])
-    #print(prediction_test[i])
+    print(Y_test[i])
+    print(prediction_test[i])
     diff = abs(prediction_test[i] - Y_test[i])
     print(diff)
     error = error + diff
