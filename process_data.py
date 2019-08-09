@@ -82,7 +82,7 @@ print (np.corrcoef(traffic, CO))
 print (np.corrcoef(traffic, BC))
 print (np.corrcoef(traffic, NO2))
 print (np.corrcoef(traffic, NOX))
-#print (np.corrcoef(traffic, PM25HR))
+print (np.corrcoef(traffic, PM25HR))
 print (np.corrcoef(traffic, TEMP))
 print (np.corrcoef(traffic, WINSPD))
 

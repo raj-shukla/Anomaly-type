@@ -46,7 +46,7 @@ Y_test = Y[2000:]
 
 
 
-model = load_model('CNN_layers_activation_tanh_4_epochs_5000.h5')
+model = load_model('CNN_layers_activation_sigmoid_4_epochs_5000.h5')
 #model.summary()
 model.get_weights()
 
