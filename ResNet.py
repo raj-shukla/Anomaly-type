@@ -125,25 +125,25 @@ def build_resnet(input_shape, n_feature_maps):
 
       
 layers = 4
-epochs = 1
+epochs = 1500
 file_name = "ResNet_layers_"+ str(layers)+ "_" + "epochs_" + str(epochs)
      
 x , y = build_resnet(X_train.shape[1:], 64)
 model = keras.models.Model(inputs=x, outputs=y)
 
-model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['mae'])
-tensor_board = TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
-history = model.fit(X_train, Y_train, batch_size= 256, verbose=1, epochs=epochs,
-                  callbacks=[tensor_board])
-#print(file_name)
+model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['mae', 'mse'])
 
-model.save(file_name + '.h5')
+tensor_board = TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
+reduce_lr = ReduceLROnPlateau(monitor='mean_absolute_error', factor=0.5, patience=50, min_lr=0.0001)
+history = model.fit(X_train, Y_train, batch_size= 256, verbose=1, epochs=epochs, validation_data=(X_test, Y_test), 
+                  callbacks=[tensor_board, reduce_lr])
+
+print(file_name)
+#model.save(file_name + '.h5')
 model.summary()
 
 score = model.evaluate(X_test, Y_test)
 print (score)
-
-
 
 
 
