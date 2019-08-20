@@ -1,7 +1,0 @@
-mean_squared_error,0.3561952183246613
-val_loss,0.2356887111643783
-val_mean_absolute_error,0.4118012337624526
-val_mean_squared_error,0.2356887111643783
-mean_absolute_error,0.5095005111694336
-lr,0.001
-loss,0.3561952183246613
