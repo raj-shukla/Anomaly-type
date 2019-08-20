@@ -10,7 +10,6 @@ from keras.layers import Dense, Flatten
 from keras.layers import LSTM, Dropout
 import csv
 
-
 np.random.seed(7)
 
 
@@ -44,26 +43,40 @@ Y_train = Y[0:2000]
 X_test = X[2000:, :, :]
 Y_test = Y[2000:]
 
-
-
-model = load_model('CNN_layers_activation_sigmoid_4_epochs_5000.h5')
-#model.summary()
+model = load_model('MLP.h5')
+model.summary()
 model.get_weights()
 
 prediction_test = model.predict(X_test)
 print (prediction_test.flatten())
 
-error = 0
-for i in range(0, len(Y_test)):
-    print("###############")
-    print(Y_test[i])
-    print(prediction_test[i])
-    diff = abs(prediction_test[i] - Y_test[i])
-    print(diff)
-    error = error + diff
-    
-print(error/len(Y_test))
+model = load_model('LSTM.h5')
+model.summary()
+model.get_weights()
 
+prediction_test = model.predict(X_test)
+print (prediction_test.flatten())
+
+model = load_model('CNN.h5')
+model.summary()
+model.get_weights()
+
+prediction_test = model.predict(X_test)
+print (prediction_test.flatten())
+
+model = load_model('CNN_LSTM.h5')
+model.summary()
+model.get_weights()
+
+prediction_test = model.predict(X_test)
+print (prediction_test.flatten())
+
+model = load_model('ResNet.h5')
+model.summary()
+model.get_weights()
+
+prediction_test = model.predict(X_test)
+print (prediction_test.flatten())
 
 
 

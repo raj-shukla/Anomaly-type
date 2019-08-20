@@ -9,24 +9,14 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten
 from keras.layers import LSTM, Dropout
 from keras import metrics
-import json
+import functions
 import csv
+import sys
 
-np.random.seed(813306)
-
-X = []
-Y = []
-with open("input_data.csv", "r") as input_file:
-    reader = csv.reader(input_file)
-    for row in reader:
-        x = [float(i) for i in row]
-        X.append(x)
-        
-with open("output_data.csv", "r") as output_file:
-    reader = csv.reader(output_file)
-    for row in reader:
-        Y = [float(i) for i in row]
-
+arg = sys.argv[1]
+X, Y = functions.read_data(arg)
+file_name = arg + "_ResNet"
+epochs = functions.epochs
 
 
 X, Y = np.array(X), np.array(Y)
@@ -120,30 +110,20 @@ def build_resnet(input_shape, n_feature_maps):
     print ('        -- model was built.')
     return x, out
  
-       
-
-
-      
-layers = 4
-epochs = 1500
-file_name = "ResNet_layers_"+ str(layers)+ "_" + "epochs_" + str(epochs)
-     
+        
 x , y = build_resnet(X_train.shape[1:], 64)
 model = keras.models.Model(inputs=x, outputs=y)
 
 model.compile(optimizer = 'adam', loss = 'mean_squared_error', metrics=['mae', 'mse'])
 
-tensor_board = TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
-reduce_lr = ReduceLROnPlateau(monitor='mean_absolute_error', factor=0.5, patience=50, min_lr=0.0001)
+tensor_board = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
+reduce_lr = keras.callbacks.ReduceLROnPlateau(monitor='mean_absolute_error', factor=0.5, patience=50, min_lr=0.0001)
 history = model.fit(X_train, Y_train, batch_size= 256, verbose=1, epochs=epochs, validation_data=(X_test, Y_test), 
                   callbacks=[tensor_board, reduce_lr])
 
 print(file_name)
-#model.save(file_name + '.h5')
-model.summary()
+functions.write_model(file_name, model, history)
 
-score = model.evaluate(X_test, Y_test)
-print (score)
-
+       
 
 

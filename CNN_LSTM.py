@@ -6,22 +6,14 @@ from keras.models import Sequential
 from keras.layers import Dense, Flatten, LSTM, Dropout
 from keras.layers import Conv1D, GlobalAveragePooling1D, MaxPooling1D
 from keras import metrics
-import json
+import functions
 import csv
+import sys
 
-np.random.seed(7)
-X = []
-Y = []
-with open("input_data.csv", "r") as input_file:
-    reader = csv.reader(input_file)
-    for row in reader:
-        x = [float(i) for i in row]
-        X.append(x)
-        
-with open("output_data.csv", "r") as output_file:
-    reader = csv.reader(output_file)
-    for row in reader:
-        Y = [float(i) for i in row]
+arg = sys.argv[1]
+X, Y = functions.read_data(arg)
+file_name = arg + "_CNN_LSTM"
+epochs = functions.epochs
 
 X, Y = np.array(X), np.array(Y)
 X = np.reshape(X, (X.shape[0], X.shape[1], 1))
@@ -31,9 +23,6 @@ Y_train = Y[0:2000]
 X_test = X[2000:, :, :]
 Y_test = Y[2000:]
 
-layers = 4
-epochs = 1500
-file_name = "CNN_LSTM_layers_"+ "activation_sigmoid_" + str(layers)+ "_" + "epochs_" + str(epochs)
 
 model = Sequential ()
 model.add(Conv1D(64, 3, activation='relu', input_shape=(X_train.shape[1], X_train.shape[2])))
@@ -57,11 +46,7 @@ history = model.fit(X_train, Y_train, batch_size= 256, verbose=1, epochs=epochs,
                   callbacks=[tensor_board, reduce_lr])
 
 print(file_name)
-#model.save(file_name + '.h5')
-model.summary()
-
-score = model.evaluate(X_test, Y_test)
-print (score)
+functions.write_model(file_name, model, history)
 
 
    

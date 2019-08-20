@@ -23,7 +23,19 @@ PM25HR_h = (PM25HR_h - min(PM25HR_h))/(max(PM25HR_h) - min(PM25HR_h))
 TEMP_h = (TEMP_h - min(TEMP_h))/(max(TEMP_h) - min(TEMP_h))
 WINSPD_h = (WINSPD_h - min(WINSPD_h))/(max(WINSPD_h) - min(WINSPD_h))  
 
+
+CO_h= (CO_h - np.mean(CO_h))/np.std(CO_h) 
+BC_h= (BC_h - np.mean(BC_h))/np.std(BC_h) 
+N02_h= (NO2_h - np.mean(NO2_h))/np.std(NO2_h) 
+NOX_h= (NOX_h - np.mean(NOX_h))/np.std(NOX_h) 
+PM25HR_h= (PM25HR_h - np.mean(PM25HR_h))/np.std(PM25HR_h) 
+TEMP_h= (TEMP_h - np.mean(TEMP_h))/np.std(TEMP_h) 
+WINSPD_h= (WINSPD_h - np.mean(WINSPD_h))/np.std(WINSPD_h) 
+
+
+
 traffic_m = (traffic_m - min(traffic_m))/(max(traffic_m) - min(traffic_m)) 
+#traffic_m= (traffic_m - np.mean(traffic_m))/np.std(traffic_m) 
 
 print(len(traffic_m))
 
@@ -37,25 +49,29 @@ WINSPD = list(itertools.chain.from_iterable(itertools.repeat(x, 4) for x in WINS
 
 traffic = [ sum(traffic_m[i:i+3]) for i in range(0, len(traffic_m), 3)]
 traffic = (traffic - min(traffic))/(max(traffic) - min(traffic))
- 
 
-l = 4
+pollutants = [CO, BC, NO2, NOX, PM25HR]
+
+ 
+'''
+l = 24
 X = []
 Y = []
 
 for i in range(0, len(CO) - l):
     x = []
-    x.extend(CO[i:i+l])
+    #x.extend(CO[i:i+l])
     x.extend(BC[i:i+l])
-    x.extend(NO2[i:i+l])
-    x.extend(NOX[i:i+l])
-    x.extend(PM25HR[i:i+l])
+    #x.extend(NO2[i:i+l])
+    #x.extend(NOX[i:i+l])
+    #x.extend(PM25HR[i:i+l])
     x.extend(TEMP[i:i+l])
     x.extend(WINSPD[i:i+l])
     y = traffic[i+l-1]
     X.append(x)
     Y.append(y)
- 
+
+
 print ("###############")
 print (np.corrcoef(CO, BC))
 print (np.corrcoef(CO, NO2))
@@ -85,16 +101,9 @@ print (np.corrcoef(traffic, NOX))
 print (np.corrcoef(traffic, PM25HR))
 print (np.corrcoef(traffic, TEMP))
 print (np.corrcoef(traffic, WINSPD))
+'''
 
 
-with open("input_data.csv", mode="w") as f:
-    writer = csv.writer(f)
-    for row in X:
-        writer.writerow(row)
-        
-with open("output_data.csv", mode="w") as f:
-    writer = csv.writer(f)
-    writer.writerow(Y)
             
 
             

@@ -5,22 +5,14 @@ from keras.callbacks import History, TensorBoard, ReduceLROnPlateau
 from keras.models import Sequential
 from keras.layers import Dense, Flatten, LSTM, Dropout
 from keras import metrics
-import json
+import functions
 import csv
+import sys
 
-np.random.seed(7)
-X = []
-Y = []
-with open("input_data.csv", "r") as input_file:
-    reader = csv.reader(input_file)
-    for row in reader:
-        x = [float(i) for i in row]
-        X.append(x)
-        
-with open("output_data.csv", "r") as output_file:
-    reader = csv.reader(output_file)
-    for row in reader:
-        Y = [float(i) for i in row]
+arg = sys.argv[1]
+X, Y = functions.read_data(arg)
+file_name = arg + "_LSTM"
+epochs = functions.epochs
 
 X, Y = np.array(X), np.array(Y)
 X = np.reshape(X, (X.shape[0], X.shape[1], 1))
@@ -31,8 +23,6 @@ X_test = X[2000:, :, :]
 Y_test = Y[2000:]
     
 
-layers = 4
-epochs = 1500
 
 model = Sequential ()
 model.add(LSTM(units=128, return_sequences=True, activation='softmax', input_shape=(X_train.shape[1], 1))) 
@@ -59,11 +49,7 @@ history = model.fit(X_train, Y_train, batch_size= 256, verbose=1, epochs=epochs,
                   callbacks=[tensor_board, reduce_lr])
 
 print(file_name)
-#model.save(file_name + '.h5')
-model.summary()
-
-score = model.evaluate(X_test, Y_test)
-print (score)
+functions.write_model(file_name, model, history)
 
 
         
