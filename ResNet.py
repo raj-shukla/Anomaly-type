@@ -110,7 +110,7 @@ def build_resnet(input_shape, n_feature_maps):
     print ('        -- model was built.')
     return x, out
  
-        
+
 x , y = build_resnet(X_train.shape[1:], 64)
 model = keras.models.Model(inputs=x, outputs=y)
 

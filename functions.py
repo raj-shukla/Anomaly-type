@@ -29,7 +29,7 @@ def read_data(arg):
      
     return X, Y
      
-epochs = 1
+epochs = 1500
 
 def write_model(file_name, model, history):
     model.save("models/" + file_name + '.h5')

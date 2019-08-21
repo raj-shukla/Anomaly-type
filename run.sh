@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/tensorflow/bin/activate
+source keras_tf/bin/activate
 python MLP.py CO
 python MLP.py BC
 python MLP.py NO2

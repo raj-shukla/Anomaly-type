@@ -13,7 +13,7 @@ traffic = process_data.traffic
 pollutants_name = ["CO", "BC", "NO2", "NOX", "PM25HR"]
 
 def write_data(pollutant, pollutant_name):
-    l = 24
+    l = 16
     X = []
     Y = []
     for i in range(0, len(TEMP) - l):

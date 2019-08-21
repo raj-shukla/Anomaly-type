@@ -50,8 +50,13 @@ model.get_weights()
 prediction_test = model.predict(X_test)
 print (prediction_test.flatten())
 
+<<<<<<< Updated upstream
 model = load_model('LSTM.h5')
 model.summary()
+=======
+model = load_model('CResNet_layers_4_epochs_1500.h5')
+#model.summary()
+>>>>>>> Stashed changes
 model.get_weights()
 
 prediction_test = model.predict(X_test)
