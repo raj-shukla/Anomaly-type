@@ -1,12 +1,11 @@
 from tensorflow import keras
 import numpy as np
 import random
-from matplotlib import pyplot as plt
-from keras.callbacks import History, TensorBoard, ReduceLROnPlateau
 from keras.models import Sequential
-from keras.layers import Dense, Flatten, LSTM, Dropout
-from keras.layers import Conv1D, GlobalAveragePooling1D, MaxPooling1D
-from keras import metrics
+from keras.models import model_from_json
+from keras.models import load_model
+from keras.layers import Dense, Flatten
+from keras.layers import LSTM, Dropout
 import json
 import csv
 import sys
