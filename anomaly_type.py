@@ -54,12 +54,12 @@ def find_accuracy(positions, outliers_positions):
 
 th = 0.05
 std_dev = 0.31
-positions = random.sample(range(0, 952), 476)
+#positions = random.sample(range(0, 952), 476)
 alpha_list = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5] 
 beta_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 K_list = [1, 2, 3, 4, 5]
 
-def run_simulation(alpha, beta, K):
+def run_simulation(alpha, beta, K, positions):
     outliers = []
     for arg in pollutants_name:
         X_test, Y_test = read_data(arg)
@@ -90,6 +90,8 @@ for K in K_list:
     print (accuracy[3:])
     
 '''    
+
+'''
 accuracy_list = []    
 for alpha in alpha_list:
     for beta in beta_list:
@@ -104,7 +106,20 @@ with open("accuracy.txt", mode="w") as f:
     writer = csv.writer(f)
     for row in accuracy_list:
         writer.writerow(row)
-        
+
+'''
+
+accuracy_list = []
+f = 0
+for i in range(0, 20):
+    m = int(952/20)
+    f = f + m
+    positions = random.sample(range(0, 952), f)
+    accuracy = run_simulation(alpha_list[2], beta_list[4], K_list[2], positions)
+    accuracy_list.append(accuracy)
+    print (accuracy)
+    
+print (accuracy)        
 
 
 
