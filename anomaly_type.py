@@ -75,7 +75,8 @@ def run_simulation(alpha, beta, K):
     outliers_position = [1 if i>=K else 0 for i in counts]
     accuracy = find_accuracy(positions, outliers_position)
     return accuracy
-    
+
+'''    
 for alpha in alpha_list:
     accuracy = run_simulation(alpha, beta_list[2], K_list[2])
     print (accuracy[3:])
@@ -87,6 +88,23 @@ for beta in beta_list:
 for K in K_list:
     accuracy = run_simulation(alpha_list[2], beta_list[4], K)
     print (accuracy[3:])
+    
+'''    
+accuracy_list = []    
+for alpha in alpha_list:
+    for beta in beta_list:
+        for K in K_list:
+            accuracy = run_simulation(alpha, beta, K)
+            accuracy_list.append((alpha, beta, K) + accuracy)
+            print ((alpha, beta, K) + accuracy)
+         
+print (accuracy_list)
+
+with open("accuracy.txt", mode="w") as f:
+    writer = csv.writer(f)
+    for row in accuracy_list:
+        writer.writerow(row)
+        
 
 
 

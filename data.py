@@ -105,7 +105,7 @@ TEMP_h =   np.asarray([i[2] for i in TEMP_list]).reshape(31, 24)
 WINSPD_tmp = [0 if i[2] == 'CALM' else i[2] for i in WINSPD_list]
 WINSPD_h = np.asarray([float(i.split('/')[-1]) if type(i) == str else i  for i in WINSPD_tmp]).reshape(31, 24)
 
-
+print (CO_h)
 
 imp_mean = Imputer(missing_values=nan, strategy='mean')
 CO_h = np.round(imp_mean.fit_transform(CO_h), 2).flatten()

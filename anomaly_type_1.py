@@ -80,6 +80,7 @@ for alpha in alpha_list:
     accuracy = run_simulation(alpha, beta_list[2], K_list[2])
     print (accuracy[3:])
 
+'''
 for beta in beta_list:
     accuracy = run_simulation(alpha_list[2], beta, K_list[2])
     print (accuracy[3:])
@@ -87,7 +88,7 @@ for beta in beta_list:
 for K in K_list:
     accuracy = run_simulation(alpha_list[2], beta_list[4], K)
     print (accuracy[3:])
-
+'''
 
 
 
